@@ -213,7 +213,7 @@ static bool captivePortal(AsyncWebServerRequest *request)
   if (!isIp(hostH) && hostH.indexOf(F("wled.me")) < 0 && hostH.indexOf(cmDNS) < 0 && hostH.indexOf(':') < 0) {
     DEBUG_PRINTLN(F("Captive portal"));
     AsyncWebServerResponse *response = request->beginResponse(302);
-    response->addHeader(F("Location"), F("http://4.3.2.1"));
+    response->addHeader(F("Location"), F("http://9.8.7.6"));
     request->send(response);
     return true;
   }
