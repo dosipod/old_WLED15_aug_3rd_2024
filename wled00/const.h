@@ -29,7 +29,7 @@
 #define DEFAULT_AP_SSID     WLED_BRAND "-AP"
 #define DEFAULT_AP_PASS     "wled1234"
 #define DEFAULT_OTA_PASS    "wledota"
-#define DEFAULT_MDNS_NAME   "x"
+#define DEFAULT_MDNS_NAME   "ALDIY_wled21"
 
 //increase if you need more
 #ifndef WLED_MAX_WIFI_COUNT
