@@ -23,24 +23,24 @@ void parseMQTTBriPayload(char* payload)
 void onMqttConnect(bool sessionPresent)
 {
   //(re)subscribe to required topics
-  char subuf[38];
+  char subuf[55];
 
   if (mqttDeviceTopic[0] != 0) {
-    strlcpy(subuf, mqttDeviceTopic, 33);
+    strlcpy(subuf, mqttDeviceTopic, 50);
     mqtt->subscribe(subuf, 0);
     strcat_P(subuf, PSTR("/col"));
     mqtt->subscribe(subuf, 0);
-    strlcpy(subuf, mqttDeviceTopic, 33);
+    strlcpy(subuf, mqttDeviceTopic, 50);
     strcat_P(subuf, PSTR("/api"));
     mqtt->subscribe(subuf, 0);
   }
 
   if (mqttGroupTopic[0] != 0) {
-    strlcpy(subuf, mqttGroupTopic, 33);
+    strlcpy(subuf, mqttGroupTopic, 50);
     mqtt->subscribe(subuf, 0);
     strcat_P(subuf, PSTR("/col"));
     mqtt->subscribe(subuf, 0);
-    strlcpy(subuf, mqttGroupTopic, 33);
+    strlcpy(subuf, mqttGroupTopic, 50);
     strcat_P(subuf, PSTR("/api"));
     mqtt->subscribe(subuf, 0);
   }
@@ -133,25 +133,25 @@ void publishMqtt()
 
   #ifndef USERMOD_SMARTNEST
   char s[10];
-  char subuf[48];
+  char subuf[55];
 
   sprintf_P(s, PSTR("%u"), bri);
-  strlcpy(subuf, mqttDeviceTopic, 33);
+  strlcpy(subuf, mqttDeviceTopic, 50);
   strcat_P(subuf, PSTR("/g"));
   mqtt->publish(subuf, 0, retainMqttMsg, s);         // optionally retain message (#2263)
 
   sprintf_P(s, PSTR("#%06X"), (col[3] << 24) | (col[0] << 16) | (col[1] << 8) | (col[2]));
-  strlcpy(subuf, mqttDeviceTopic, 33);
+  strlcpy(subuf, mqttDeviceTopic,50);
   strcat_P(subuf, PSTR("/c"));
   mqtt->publish(subuf, 0, retainMqttMsg, s);         // optionally retain message (#2263)
 
-  strlcpy(subuf, mqttDeviceTopic, 33);
+  strlcpy(subuf, mqttDeviceTopic, 50);
   strcat_P(subuf, PSTR("/status"));
   mqtt->publish(subuf, 0, true, "online");          // retain message for a LWT
 
   char apires[1024];                                // allocating 1024 bytes from stack can be risky
   XML_response(nullptr, apires);
-  strlcpy(subuf, mqttDeviceTopic, 33);
+  strlcpy(subuf, mqttDeviceTopic, 50);
   strcat_P(subuf, PSTR("/v"));
   mqtt->publish(subuf, 0, retainMqttMsg, apires);   // optionally retain message (#2263)
   #endif
@@ -183,7 +183,7 @@ bool initMqtt()
   if (mqttUser[0] && mqttPass[0]) mqtt->setCredentials(mqttUser, mqttPass);
 
   #ifndef USERMOD_SMARTNEST
-  strlcpy(mqttStatusTopic, mqttDeviceTopic, 33);
+  strlcpy(mqttStatusTopic, mqttDeviceTopic, 50);
   strcat_P(mqttStatusTopic, PSTR("/status"));
   mqtt->setWill(mqttStatusTopic, 0, true, "offline"); // LWT message
   #endif
